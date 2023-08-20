@@ -1,66 +1,145 @@
+# Mortgage Calculator Web Application
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
 
-## About Laravel
+- [Introduction](#introduction)
+- [Features](#features)
+- - [Calculating Monthly Payments](#calculating-monthly-payments)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Setting Up with Laravel Sail](#setting-up-with-laravel-sail)
+- [Usage](#usage)
+- - [Inputting Loan Details](#inputting-loan-details)
+  - [Generating Amortization Schedules](#generating-amortization-schedules)
+  - [Applying Extra Repayments](#applying-extra-repayments)
+- [API Endpoints](#api-endpoints)
+- [Controllers and Services](#controllers-and-services)
+- [Models and Migrations](#models-and-migrations)
+- [Contributing](#contributing)
+- [License](#license)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Introduction
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Welcome to the Mortgage Calculator web application built using Laravel 10. This application enables users to calculate mortgage loan details, generate amortization schedules, and handle extra repayments. Whether you're a borrower looking to plan your loan payments or a developer seeking insights into building financial tools, this app has you covered.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- Calculate monthly mortgage payments based on loan details.
+- Generate an amortization schedule with principal and interest breakdowns.
+- Apply fixed extra repayments, updating schedules accordingly.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Calculating Monthly Payments
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The application uses the provided loan amount, interest rate, and loan term to calculate the monthly mortgage payment using the given formula.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+● Monthly interest rate = (Annual interest rate / 12) / 100 <br>
+● Number of months = Loan term * 12 <br>
+● Monthly payment = (Loan amount * Monthly interest rate) / (1 - (1 + Monthly interest rate)^(-Number of months)) <br>
 
-## Laravel Sponsors
+## Getting Started
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Prerequisites
 
-### Premium Partners
+- PHP 8.2.9
+- Composer
+- Laravel
+- MySQL
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/mortgage-calculator.git
+   cd mortgage-calculator
+   ```
+
+### Setting Up with Laravel Sail
+
+1. Install Laravel Sail (if not already installed):
+
+   ```bash
+   composer require laravel/sail --dev
+   ```
+
+2. Initialize Laravel Sail:
+
+   ```bash
+   php artisan sail:install
+   ```
+
+3. Start the development environment using Sail:
+
+   ```bash
+   ./vendor/bin/sail up
+   ```
+
+## Usage
+
+1. Run the command to list docker containers
+
+   ```bash
+   docker ps
+   ```
+
+2. Run the laravel container named, 'dashing-assessment-laravel.test-1' as follows:
+
+   ```bash
+   docker exec -it dashing-assessment-laravel.test-1 bash
+   ```
+
+3. Run the migrations with the command
+
+   ```bash
+   php artisan migrate
+   ```
+
+  If you come accross any failure in migrations or testing, please consider changing the DB_HOST value in the .env
+
+   ```bash
+   DB_HOST=mysql OR DB_HOST=127.0.0.1
+   ```
+
+
+## Endpoints
+
+- **GET** `/welcome`
+   a welcome screen with brief introduction about the application
+
+- **GET** `/loan/{id}`
+   view a loan setup, amortization and repayment schedule
+
+- **POST** `/loan`
+  Store a loan setup, amortization and repayment schedule
+
+- **Delete** `/loan`
+  Delete a loan setup, amortization and repayment schedule
+
+
+### Inputting Loan Details
+
+1. Access the web application by navigating to `http://localhost` in your browser.
+2. Input loan details like loan amount, interest rate, and loan term.
+
+### Generating Amortization Schedules
+
+1. Calculate monthly mortgage payment and generate an amortization schedule.
+
+### Applying Extra Repayments
+
+1. Optionally, apply fixed extra repayments to observe recalculated schedules.
+
+## Controllers and Services
+
+The application uses controllers and services to handle logic and interactions.
+
+## Models and Migrations
+
+The application uses models and migrations to define data structure and manage the database.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Contributions are welcome! Fork the repository and create pull requests with your proposed changes.
