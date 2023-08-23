@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/loan', [LoanController::class, 'store'])->name('loan.store');
+Route::get('/loan/{id}', [LoanController::class, 'show'])->name('loan.view');
+Route::get('/loan', [LoanController::class, 'index'])->name('loan.index');
+Route::delete('/loan', [LoanController::class, 'index'])->name('loan.delete');
